@@ -1,0 +1,6 @@
+// primeiro comentário
+
+/*
+um bloco
+de comentario
+*/
