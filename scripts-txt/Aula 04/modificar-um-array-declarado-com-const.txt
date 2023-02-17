@@ -1,0 +1,11 @@
+const s = [5, 7, 2];
+function editInPlace() {
+  // Altere apenas o código abaixo desta linha
+  let aux = s[2];
+  s[2] = s[1];
+  s[1] = s[0];
+  s[0] = aux;
+
+  // Altere apenas o código acima desta linha
+}
+editInPlace();
