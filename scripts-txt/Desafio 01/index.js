@@ -39,7 +39,6 @@ const getPokemonsByType = (type) => {
 
 /*------------Traduz os tipos de cada pokemón para o portugues------------*/
 const translateTypesToPortuguese = () => {
-  let type;
   for (let i = 0; i < pokemons.length; i++) {
     for (let j = 0; j < pokemons[i].type.length; j++) {
       pokemons[i].type[j] = dictionary[pokemons[i].type[j]]; //Ex: grass -> dictionary["grass"] = planta
