@@ -1,5 +1,5 @@
 import { pokemons } from "./data.js";
-import { dicionario } from "./traducao.js";
+import { dictionary } from "./pokemonDictionary.js";
 
 /*------------Recupera todos os tipos de Pokemón------------*/
 const getAllTypes = () => {
@@ -37,12 +37,12 @@ const getPokemonsByType = (type) => {
   return pokemonsSameType;
 };
 
-/*------------Traduz os tipos de cada pokemón------------*/
-const translateTypes = () => {
+/*------------Traduz os tipos de cada pokemón para o portugues------------*/
+const translateTypesToPortuguese = () => {
   let type;
   for (let i = 0; i < pokemons.length; i++) {
     for (let j = 0; j < pokemons[i].type.length; j++) {
-      pokemons[i].type[j] = dicionario[pokemons[i].type[j]]; //Ex: grass -> dicionario["grass"] = planta
+      pokemons[i].type[j] = dictionary[pokemons[i].type[j]]; //Ex: grass -> dictionary["grass"] = planta
     }
   }
 };
@@ -55,6 +55,6 @@ console.log(getPokemonsByType("fire"));
 
 console.log("\n--------Antes da tradução--------");
 console.log(getAllTypes());
-translateTypes();
+translateTypesToPortuguese();
 console.log("\n--------Depois da tradução--------");
 console.log(getAllTypes());

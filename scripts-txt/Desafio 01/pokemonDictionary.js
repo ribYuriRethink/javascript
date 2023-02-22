@@ -1,4 +1,4 @@
-export const dicionario = {
+export const dictionary = {
   grass: "planta",
   poison: "veneno",
   fire: "fogo",
