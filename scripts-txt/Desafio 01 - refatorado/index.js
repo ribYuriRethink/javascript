@@ -27,9 +27,9 @@ const pokemonsByType = (type) => {
   type = type.toLowerCase();
   const pokemonsSameType = [];
 
-  pokemons.map((element) => {
-    if (element.type.find((e) => e === type)) {
-      pokemonsSameType.push(element.name);
+  pokemons.map((pokemon) => {
+    if (pokemon.type.find((e) => e === type)) {
+      pokemonsSameType.push(pokemon.name);
     }
   });
 
@@ -38,8 +38,11 @@ const pokemonsByType = (type) => {
 
 /*------------Traduz os tipos de cada pokemón para o portugues------------*/
 const pokemonTypesInPortuguese = () => {
-  const typesInPortuguese = pokemons.map((element) => {
-    return { ...element, type: element.type.map((type) => dictionary[type]) };
+  const typesInPortuguese = pokemons.map((pokemon) => {
+    return {
+      ...pokemon,
+      type: (pokemon.type = pokemon.type.map((type) => dictionary[type])),
+    };
   });
 
   return typesInPortuguese;
