@@ -1,6 +1,6 @@
 ## Desafio-01 refatorado com find() e map()
 
-Utilizando os dados dos Pokemons disponibilizados no arquivo **data.js **em anexo, faça as seguintes atividades:
+Utilizando os dados dos Pokemons disponibilizados no arquivo **data.js** em anexo, faça as seguintes atividades:
 
 - crie uma função que retorne os dados de um _pokemon_ a partir do seu nome;
 - crie uma função que, recebendo o tipo de um _pokemon_ , retorne a lista de _pokemons_ que pertencem a este tipo, e
