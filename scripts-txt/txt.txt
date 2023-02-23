@@ -1,0 +1,30 @@
+const allTypesOfPokemon = () => {
+  const allTypes = [];
+
+  pokemons.map((e) =>
+    e.type.map((type) => {
+      // Cada elemento de type dentro de cada elemento de pokemon
+      if (!allTypes.find((e) => e == type)) {
+        // Se o tipo não estiver em allTypes, adiciona
+        allTypes.push(type);
+      }
+    })
+  );
+
+  return allTypes;
+};
+
+/*------------Recupera o Pokemón pelo Nome------------*/
+const pokemonData = (name) =>
+  pokemons.find((e) => e.name === name.toLowerCase());
+
+/*------------Recupera os Pokemóns pelo Tipo------------*/
+const pokemonsByType = (type) => {
+  type = type.toLowerCase();
+  const pokemonsSameType = [];
+
+  pokemons.map((element) => {
+    if (element.type.find((e) => e === type)) {
+      pokemonsSameType.push(element.name);
+    }
+  });

@@ -5,14 +5,16 @@ import { dictionary } from "./pokemonDictionary.js";
 const allTypesOfPokemon = () => {
   const allTypes = [];
 
-  for (let i = 0; i < pokemons.length; i++) {
-    for (let j = 0; j < pokemons[i].type.length; j++) {
-      if (!allTypes.find((e) => e == pokemons[i].type[j])) {
+  pokemons.map((e) =>
+    e.type.map((type) => {
+      // Cada elemento de type dentro de cada elemento de pokemon
+      if (!allTypes.find((e) => e == type)) {
         // Se o tipo não estiver em allTypes, adiciona
-        allTypes.push(pokemons[i].type[j]);
+        allTypes.push(type);
       }
-    }
-  }
+    })
+  );
+
   return allTypes;
 };
 
@@ -25,20 +27,22 @@ const pokemonsByType = (type) => {
   type = type.toLowerCase();
   const pokemonsSameType = [];
 
-  for (let i = 0; i < pokemons.length; i++) {
-    if (pokemons[i].type.find((e) => e === type)) {
-      pokemonsSameType.push(pokemons[i].name);
+  pokemons.map((element) => {
+    if (element.type.find((e) => e === type)) {
+      pokemonsSameType.push(element.name);
     }
-  }
-  if (pokemonsSameType.length == 0) {
-    return "Não há pokemons desse tipo na base de dados.";
-  }
+  });
 
   return pokemonsSameType;
 };
 
 /*------------Traduz os tipos de cada pokemón para o portugues------------*/
-const translateTypesToPortuguese = () => {
+const pokemonTypesInPortuguese = () => {
+  // pokemons.map((element) =>
+  //   element.type.map((type) => {
+  //     element.type = dictionary[type];
+  //   })
+  // );
   for (let i = 0; i < pokemons.length; i++) {
     for (let j = 0; j < pokemons[i].type.length; j++) {
       pokemons[i].type[j] = dictionary[pokemons[i].type[j]]; //Ex: grass -> dictionary["grass"] = planta
@@ -54,6 +58,6 @@ console.log(pokemonsByType("fire"));
 
 console.log("\n--------Antes da tradução--------");
 console.log(allTypesOfPokemon());
-translateTypesToPortuguese();
+pokemonTypesInPortuguese();
 console.log("\n--------Depois da tradução--------");
 console.log(allTypesOfPokemon());
