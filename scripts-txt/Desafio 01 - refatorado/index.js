@@ -2,6 +2,7 @@ import { pokemons } from "./data.js";
 import { dictionary } from "./pokemonDictionary.js";
 
 /*------------Recupera todos os tipos de Pokemón------------*/
+// Função apenas para visualização dos tipos antes e depois da tradução
 const allTypesOfPokemon = () => {
   const allTypes = [];
 
