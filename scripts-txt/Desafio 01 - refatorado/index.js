@@ -3,18 +3,17 @@ import { dictionary } from "./pokemonDictionary.js";
 
 /*------------Recupera todos os tipos de Pokemón------------*/
 // Função apenas para visualização dos tipos antes e depois da tradução
-const allTypesOfPokemon = () => {
-  const allTypes = [];
-
-  pokemons.map((e) =>
+const allTypesOfPokemon = (arrayPokemons) => {
+  const allTypes = arrayPokemons.reduce((acc, e) => {
     e.type.map((type) => {
       // Cada elemento de type dentro de cada elemento de pokemon
-      if (!allTypes.find((e) => e == type)) {
+      if (!acc.includes(type)) {
         // Se o tipo não estiver em allTypes, adiciona
-        allTypes.push(type);
+        acc.push(type);
       }
-    })
-  );
+    });
+    return acc;
+  }, []);
 
   return allTypes;
 };
@@ -39,11 +38,11 @@ const pokemonsByType = (type) => {
 
 /*------------Traduz os tipos de cada pokemón para o portugues------------*/
 const pokemonTypesInPortuguese = () => {
-  for (let i = 0; i < pokemons.length; i++) {
-    for (let j = 0; j < pokemons[i].type.length; j++) {
-      pokemons[i].type[j] = dictionary[pokemons[i].type[j]]; //Ex: grass -> dictionary["grass"] = planta
-    }
-  }
+  const typesInPortuguese = pokemons.map((element) => {
+    return { ...element, type: element.type.map((type) => dictionary[type]) };
+  });
+
+  return typesInPortuguese;
 };
 
 console.log("----------Recuperando por nome----------");
@@ -53,7 +52,7 @@ console.log("\n---------Pokemóns por tipo--------");
 console.log(pokemonsByType("fire"));
 
 console.log("\n--------Antes da tradução--------");
-console.log(allTypesOfPokemon());
-pokemonTypesInPortuguese();
+console.log(allTypesOfPokemon(pokemons));
+
 console.log("\n--------Depois da tradução--------");
-console.log(allTypesOfPokemon());
+console.log(allTypesOfPokemon(pokemonTypesInPortuguese()));
