@@ -1,0 +1,18 @@
+export const dictionary: {[key:string]:string} = {
+  grass: "planta",
+  poison: "veneno",
+  fire: "fogo",
+  flying: "voador",
+  water: "água",
+  bug: "inseto",
+  normal: "normal",
+  electric: "elétrico",
+  ground: "terrestre",
+  fairy: "fada",
+  fighting: "lutador",
+  psychic: "psíquico",
+  rock: "pedra",
+  steel: "aço",
+  ice: "gelo",
+  ghost: "fantasma",
+};
