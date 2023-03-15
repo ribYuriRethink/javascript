@@ -1,4 +1,4 @@
-export const dictionary: {[key:string]:string} = {
+export const dictionary: { [key: string]: string } = {
   grass: "planta",
   poison: "veneno",
   fire: "fogo",
