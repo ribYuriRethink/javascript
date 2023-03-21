@@ -1,18 +1,18 @@
 // Função 1 - doubleANumber
 const doubleANumber = (number) => number * 2;
-console.log(doubleANumber(2)); // 4
+// console.log(doubleANumber(2)); // 4
 
 // Função 2 - createFullName
 const createFullName = (firstName, lastName) => firstName + " " + lastName;
-console.log(createFullName("Gabriel", "Gomes")); // Gabriel Gomes
+// console.log(createFullName("Gabriel", "Gomes")); // Gabriel Gomes
 
 // Função 3 - calculateTheLenghtOfAString2
 const calculateTheLenghtOfAString2 = (str) => {
-  const length = str.length;
-  console.log(`o tamanho de "${str}" é:`, length);
+  // const length = str.length;
+  // console.log(`o tamanho de "${str}" é:`, length);
   return str.length;
 };
-console.log(calculateTheLenghtOfAString2("Tamanho")); // 7
+// console.log(calculateTheLenghtOfAString2("Tamanho")); // 7
 
 // Função 4 - numbersArrayIntoString
 const numbersArrayIntoString = (array) => {
@@ -21,7 +21,7 @@ const numbersArrayIntoString = (array) => {
     return (acc += cur);
   }, "");
 };
-console.log(numbersArrayIntoString([1, 2, 3, 4, 5, 6, 7, 8])); // “123.456.78”
+// console.log(numbersArrayIntoString([1, 2, 3, 4, 5, 6, 7, 8])); // “123.456.78”
 
 // Função 5 - addNewLanguage
 const programming = {
@@ -36,7 +36,7 @@ const addNewLanguage = (object, newLanguage) => {
   object.languages.push(newLanguage);
   return object;
 };
-console.log(addNewLanguage(programming, "Swift"));
+// console.log(addNewLanguage(programming, "Swift"));
 // Test if languages have lenght + 1
 
 // Função 6 - votersResult
@@ -80,7 +80,7 @@ const votersResult = (data) =>
     }
   );
 
-console.log(votersResult(voters));
+// console.log(votersResult(voters));
 /*
 { numYoungVotes: 1, // número de eleitores jovens que votaram
 numYoungPeople: 4, // número de eleitores jovens
@@ -90,3 +90,12 @@ numOldVotesPeople: 3, // número de eleitores sêniores que votaram
 numOldsPeople: 4 // número de eleitores sêniores
 }
 */
+
+module.exports = {
+  doubleANumber,
+  createFullName,
+  calculateTheLenghtOfAString2,
+  numbersArrayIntoString,
+  addNewLanguage,
+  votersResult,
+};
