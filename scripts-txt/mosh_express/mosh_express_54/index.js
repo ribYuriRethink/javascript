@@ -10,17 +10,27 @@ const genres = [
   { id: 3, name: "Suspense" },
 ];
 
-function getGenreById(id) {
+function getAndValidateGenreById(id, res) {
   const genre = genres.find((elem) => elem.id === parseInt(id));
-  return genre;
+  if (!genre) {
+    res.status(404).send("The genre with the given id was not found");
+  } else {
+    return genre;
+  }
 }
 
-function validateGenre(genre) {
+function validateGenre(genre, res) {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
   });
 
-  return schema.validate(genre);
+  const { error } = schema.validate(genre);
+  if (error) {
+    res.status(400).send(error.details[0].message);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 app.get("/", (req, res) => {
@@ -32,15 +42,14 @@ app.get("/api/genres", (req, res) => {
 });
 
 app.get("/api/genres/:id", (req, res) => {
-  const genre = getGenreById(req.params.id);
-  if (!genre)
-    return res.status(404).send("The genre with the given id was not found");
+  const genre = getAndValidateGenreById(req.params.id, res);
+  if (!genre) return;
   res.send(genre);
 });
 
 app.post("/api/genres", (req, res) => {
-  const { error } = validateGenre(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  const invalidGenre = validateGenre(req.body, res);
+  if (invalidGenre) return;
 
   const newGenre = {
     id: genres[genres.length - 1].id + 1,
@@ -52,21 +61,19 @@ app.post("/api/genres", (req, res) => {
 });
 
 app.put("/api/genres/:id", (req, res) => {
-  const genre = getGenreById(req.params.id);
-  if (!genre)
-    return res.status(404).send("The genre with the given id was not found");
+  const genre = getAndValidateGenreById(req.params.id, res);
+  if (!genre) return;
 
-  const { error } = validateGenre(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  const invalidGenre = validateGenre(req.body, res);
+  if (invalidGenre) return;
 
   genre.name = req.body.name;
   res.send(genre);
 });
 
 app.delete("/api/genres/:id", (req, res) => {
-  const genre = getGenreById(req.params.id);
-  if (!genre)
-    return res.status(404).send("The genre with the given id was not found");
+  const genre = getAndValidateGenreById(req.params.id, res);
+  if (!genre) return;
 
   const index = genres.indexOf(genre);
   genres.splice(index, 1);
