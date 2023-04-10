@@ -1,6 +1,8 @@
-const express = require("express");
-const router = express.Router();
-const Joi = require("joi");
+import Joi from "joi";
+import express from "express";
+const app = express();
+
+app.use(express.json());
 
 const genres = [
   { id: 1, name: "Ação" },
@@ -10,9 +12,11 @@ const genres = [
 
 function getAndValidateGenreById(id, res) {
   const genre = genres.find((elem) => elem.id === parseInt(id));
-  if (!genre) res.status(404).send("The genre with the given id was not found");
-
-  return genre;
+  if (!genre) {
+    res.status(404).send("The genre with the given id was not found");
+  } else {
+    return genre;
+  }
 }
 
 function validateGenre(genre, res) {
@@ -29,17 +33,21 @@ function validateGenre(genre, res) {
   }
 }
 
-router.get("/", (req, res) => {
+app.get("/", (req, res) => {
+  res.send("Requisições > /api/genres > /api/genres/1\n");
+});
+
+app.get("/api/genres", (req, res) => {
   res.send(genres);
 });
 
-router.get("/:id", (req, res) => {
+app.get("/api/genres/:id", (req, res) => {
   const genre = getAndValidateGenreById(req.params.id, res);
   if (!genre) return;
   res.send(genre);
 });
 
-router.post("/", (req, res) => {
+app.post("/api/genres", (req, res) => {
   const invalidGenre = validateGenre(req.body, res);
   if (invalidGenre) return;
 
@@ -52,7 +60,7 @@ router.post("/", (req, res) => {
   res.send(newGenre);
 });
 
-router.put("/:id", (req, res) => {
+app.put("/api/genres/:id", (req, res) => {
   const genre = getAndValidateGenreById(req.params.id, res);
   if (!genre) return;
 
@@ -63,7 +71,7 @@ router.put("/:id", (req, res) => {
   res.send(genre);
 });
 
-router.delete("/:id", (req, res) => {
+app.delete("/api/genres/:id", (req, res) => {
   const genre = getAndValidateGenreById(req.params.id, res);
   if (!genre) return;
 
@@ -73,4 +81,5 @@ router.delete("/:id", (req, res) => {
   res.send(genre);
 });
 
-module.exports = router;
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`Listening on port ${port}`));

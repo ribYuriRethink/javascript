@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
+import genres from "./routes/genres.js";
 const app = express();
-const genres = require("./routes/genres");
 
 app.use(express.json());
 app.use("/api/genres", genres);
