@@ -90,7 +90,7 @@ const getCheapestProduct = async (endpoint) => {
 
 const showInConsole = async (callback) => console.log(await callback);
 
-// showInConsole(getAllProducts("products"));
+showInConsole(getAllProducts("products"));
 // showInConsole(getProductById(1));
 // showInConsole(getAllProductCategories("categories"));
 // showInConsole(getProductsByCategory("jewelery"));
