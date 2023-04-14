@@ -1,19 +1,17 @@
 import { Request, Response } from "express";
 import knex from "knex";
 import config from "../../knexfile";
+import { Category, Product, makeProductOutput } from "./function&types";
 
 const knexInstance = knex(config);
 
-type Category = {
-  id?: number;
-  name: string;
-};
-
 const index = async (req: Request, res: Response) => {
   try {
-    const categories = await knexInstance("categories").select("name");
+    const categories: Category[] = await knexInstance("categories").select(
+      "name"
+    );
 
-    const allCategories = categories.map((item) => item.name);
+    const allCategories: string[] = categories.map((item) => item.name);
 
     res.status(200).send(allCategories);
   } catch (error: any) {
@@ -23,9 +21,9 @@ const index = async (req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const name = req.params.name;
+    const name: string = req.params.name;
 
-    const productsByCategorie = await knexInstance("products")
+    const productsByCategorie: any[] = await knexInstance("products")
       .select("*", "products.id as id", "categories.id as categoryID")
       .join("categories", "categories.id", "=", "products.category_id")
       .where("categories.name", name);
@@ -34,22 +32,10 @@ const show = async (req: Request, res: Response) => {
       return res.status(404).send([]);
     }
 
-    productsByCategorie.map((item) => {
-      item.category = item.name;
-      delete item.category_id;
-      delete item.categoryID;
-      delete item.name;
+    const structuredProducts: Product[] =
+      makeProductOutput(productsByCategorie);
 
-      item.rating = {
-        rate: item.rate,
-        count: item.count,
-      };
-
-      delete item.rate;
-      delete item.count;
-    });
-
-    res.status(200).send(productsByCategorie);
+    res.status(200).send(structuredProducts);
   } catch (error: any) {
     res.send(error.message);
   }
@@ -61,7 +47,7 @@ const insert = async (req: Request, res: Response) => {
 
     const newCategory = { name };
 
-    const id = await knexInstance("categories").insert(newCategory);
+    const id: number[] = await knexInstance("categories").insert(newCategory);
 
     res.status(201).send({ id: id[0], name });
   } catch (error: any) {
@@ -72,13 +58,12 @@ const insert = async (req: Request, res: Response) => {
 const update = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const newName = req.body.name;
+    const newName: string = req.body.name;
 
-    const result = await knexInstance("categories")
+    const result: number = await knexInstance("categories")
       .update({ name: newName })
       .where({ id });
 
-    console.log(result);
     if (!result) throw new Error("Essa Categoria não existe");
 
     res.status(200).send({ id, name: newName });
@@ -91,7 +76,9 @@ const remove = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
 
-    const category = await knexInstance("categories").delete().where({ id });
+    const category: number = await knexInstance("categories")
+      .delete()
+      .where({ id });
 
     if (!category) throw new Error("Essa categoria não existe!");
 
