@@ -1,10 +1,16 @@
 import { getAllProducts } from "./getApiData";
+import { Request, Response } from "express";
 import knex from "knex";
 import config from "../../knexfile";
 
 const knexInstace = knex(config);
 
-const populateTable = async () => {
+const populateTable = async (_req: Request, res: Response) => {
+  const allProductsData = await knexInstace("products").select("*");
+  if (allProductsData.length != 0) {
+    return res.send("O banco já possui dados!");
+  }
+
   const resultApi = await getAllProducts("products");
 
   const allCategorys = await knexInstace("categories").select("*");
@@ -27,7 +33,9 @@ const populateTable = async () => {
   resultApi.map(async (item: any) => {
     await knexInstace("products").insert(item);
   });
-  console.log("Success!");
+
+  console.log("Populate Database success!");
+  return res.send("Banco povoado com sucesso!");
 };
 
 export { populateTable };
