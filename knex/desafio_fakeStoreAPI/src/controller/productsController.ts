@@ -44,6 +44,8 @@ const insert = async (req: Request, res: Response) => {
       .select("id")
       .where({ name: category });
 
+    if (!findCategory[0]) throw new Error("A categoria não existe!");
+
     const categoryId: number = findCategory[0].id;
 
     const newProduct: DatabaseProduct = {
@@ -67,31 +69,19 @@ const insert = async (req: Request, res: Response) => {
 const update = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const { title, price, description, category, image, rate, count } =
-      req.body;
+    const updatedProduct: any = req.body;
 
-    const updatedData: any = {
-      title,
-      price,
-      description,
-      image,
-      rate,
-      count,
-    };
-
-    if (category) {
+    if (updatedProduct.category) {
       const findCategory = await knexInstance("categories")
         .select("id")
-        .where({ name: category });
+        .where({ name: updatedProduct.category });
 
       if (!findCategory[0]) throw new Error("Essa categoria não existe!");
 
-      updatedData.category_id = findCategory[0].id;
+      updatedProduct.category_id = findCategory[0].id;
     }
 
-    const updatedProduct: DatabaseProduct = {
-      ...updatedData,
-    };
+    delete updatedProduct.category;
 
     const result = await knexInstance("products")
       .update(updatedProduct)

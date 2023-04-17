@@ -1,8 +1,11 @@
 import { Router } from "express";
 import productsController from "../controller/productsController";
-import { router as categorys } from "./categories";
+import { categories, category } from "./categories";
 
 const router = Router();
+
+router.use("/categories", categories);
+router.use("/category", category);
 
 router.get("/", productsController.index);
 router.post("/", productsController.insert);
